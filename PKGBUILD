@@ -21,7 +21,7 @@ license=('Apache')
 depends=('mkinitcpio' 'systemd')
 optdepends=('cryptsetup: for initrd-cryptsetup.service'
             'dropbear: for initrd-dropbear.service'
-            'busybox: for initrd-tinysshd.service'
+            'busybox: for initrd-tinysshd.service and initrd-ntpd.service'
             'mc: for initrd-debug-progs.service'
             'nftables: for initrd-nftables.service'
             'tinyssh: for initrd-tinysshd.service'
