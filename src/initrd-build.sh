@@ -40,7 +40,7 @@ do_dropbear_keys() {
 
     mkdir -p "/etc/dropbear"
     
-    local keytype_list="rsa ecdsa"
+    local keytype_list="rsa ecdsa ed25519"
     local keytype= source= target=
     for keytype in $keytype_list ; do
         source=$(keypath_openssh   "$keytype")
@@ -50,7 +50,10 @@ do_dropbear_keys() {
         else
             if [[ -f "$source" ]] ; then
                 plain "convert openssh to dropbear host key: $target"
-                run_command   dropbearconvert openssh dropbear "$source" "$target"
+                run_command   cp "$source" "$source.pem"
+                run_command   ssh-keygen -p -m PEM -f "$source.pem"
+                run_command   dropbearconvert openssh dropbear "$source.pem" "$target"
+                run_command   rm "$source.pem"
             else
                 plain "generate brand new dropbear host key: $target"
                 run_command   dropbearkey -t "$keytype" -f "$target"
