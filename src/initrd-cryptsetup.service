@@ -71,6 +71,7 @@ InitrdCall=add_all_modules /crypto/
 InitrdPath=/usr/lib/udev/rules.d/10-dm.rules
 InitrdPath=/usr/lib/udev/rules.d/11-dm-initramfs.rules source=/usr/lib/initcpio/udev/11-dm-initramfs.rules
 InitrdPath=/usr/lib/udev/rules.d/13-dm-disk.rules
+InitrdPath=/usr/lib/udev/rules.d/60-fido-id.rules
 InitrdPath=/usr/lib/udev/rules.d/95-dm-notify.rules
 
 # include systemd cryptsetup support
@@ -84,6 +85,12 @@ InitrdBinary=/usr/lib/systemd/system-generators/systemd-fstab-generator
 InitrdBinary=/usr/bin/systemd-ask-password
 InitrdBinary=/usr/lib/systemd/systemd-reply-password
 InitrdBinary=/usr/bin/systemd-tty-ask-password-agent
+
+# FIDO2, PKCS11 and TPM2 support
+InitrdBinary=/usr/lib/cryptsetup/libcryptsetup-token-systemd-fido2.so
+InitrdBinary=/usr/lib/cryptsetup/libcryptsetup-token-systemd-pkcs11.so
+InitrdBinary=/usr/lib/cryptsetup/libcryptsetup-token-systemd-tpm2.so
+InitrdBuild=/usr/lib/mkinitcpio-systemd-tool/initrd-build.sh command=do_add_libraries_cryptsetup
 
 # luks2 support, see #28
 InitrdBinary=/usr/lib/libgcc_s.so.1 optional=yes

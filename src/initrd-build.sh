@@ -90,6 +90,21 @@ do_tinysshd_keys() {
 
 }
 
+# Taken from https://github.com/archlinux/svntogit-packages/blob/packages/cryptsetup/trunk/install-sd-encrypt#L38-L46
+do_add_libraries_cryptsetup() {
+
+      for LIB in fido2 tss2-{{esys,rc,mu},tcti-'*'}; do
+        for FILE in $(find /usr/lib/ -maxdepth 1 -name "lib${LIB}.so*"); do
+            if [[ -L "${FILE}" ]]; then
+                add_symlink "${FILE}"
+            else
+                add_binary "${FILE}"
+            fi
+        done
+    done
+
+}
+
 # location of server host keys used by openssh
 keypath_openssh() {
     local type=$1
