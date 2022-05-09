@@ -46,3 +46,6 @@ InitrdLink=/usr/bin/shutdown   target=/usr/bin/systemctl
 
 # required by /etc/nsswitch.conf
 InitrdBinary=/usr/lib/libnss_compat.so optional=yes
+
+# use full busybox (provides tty applet)
+InitrdBinary=/usr/bin/busybox replace=yes
