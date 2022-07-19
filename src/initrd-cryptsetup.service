@@ -66,6 +66,7 @@ InitrdBinary=/usr/bin/dmsetup
 InitrdCall=add_module dm-crypt
 InitrdCall=add_module dm-integrity
 InitrdCall=add_all_modules /crypto/
+InitrdCall=add_checked_modules /drivers/char/tpm
 
 # include cryptsetup udev rules
 InitrdPath=/usr/lib/udev/rules.d/10-dm.rules
