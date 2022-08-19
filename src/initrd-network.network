@@ -7,11 +7,8 @@
 
 [Match]
 
-# use kernel interface names
-Name=eth*
-
-# TODO use predictable network interface names
-#Name=en*
+# use predictable network interface names
+Name=en*
 
 [Network]
 DHCP=ipv4

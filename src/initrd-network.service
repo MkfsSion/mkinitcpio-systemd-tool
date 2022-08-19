@@ -28,8 +28,11 @@ WantedBy=sysinit.target
 
 [X-SystemdTool]
 
-# TODO use predictable network interface names
-#InitrdPath=/usr/lib/udev/rules.d/80-net-setup-link.rules
+# use predictable network interface names
+InitrdPath=/usr/lib/udev/rules.d/75-net-description.rules
+InitrdPath=/usr/lib/udev/rules.d/80-net-setup-link.rules
+InitrdPath=/usr/lib/systemd/network/99-default.link
+InitrdPath=/usr/lib/udev/hwdb.bin
 
 # include network activated in initramfs
 InitrdPath=/etc/systemd/network/initrd-network.network source=/etc/mkinitcpio-systemd-tool/network/initrd-network.network
