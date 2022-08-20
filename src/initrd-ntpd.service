@@ -14,9 +14,9 @@ Description=Initrd NTPD Service
 Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
 ConditionPathExists=/etc/initrd-release
 DefaultDependencies=no
-After=initrd-network.service
+After=initrd-network-online.target
+Requires=initrd-network-online.target
 Before=cryptsetup-pre.target
-Requires=initrd-network.service
 
 [Service]
 ExecStart=/usr/bin/busybox ntpd -n -q

@@ -1,0 +1,23 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Wait networks to be configured in the initramfs
+
+[Unit]
+Description=Wait for Network to be Configured
+Documentation=man:systemd-networkd-wait-online.service(8)
+DefaultDependencies=no
+ConditionPathExists=/etc/initrd-release
+Requires=initrd-network.target
+After=initrd-network.target
+Before=initrd-network-online.target
+
+[Service]
+Type=oneshot
+Environment=POST_DELAY=2s
+Environment=INTERFACE=ppp0
+ExecStart=/usr/lib/systemd/systemd-networkd-wait-online -i ${INTERFACE}
+ExecStartPost=/bin/sleep ${POST_DELAY}
+RemainAfterExit=yes
+
+[Install]
+WantedBy=initrd-network-online.target

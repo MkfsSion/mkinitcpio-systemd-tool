@@ -24,7 +24,8 @@ optdepends=('cryptsetup: for initrd-cryptsetup.service'
             'mc: for initrd-debug-progs.service'
             'nftables: for initrd-nftables.service'
             'tinyssh: for initrd-tinysshd.service'
-            'tinyssh-convert: for initrd-tinysshd.service')
+            'tinyssh-convert: for initrd-tinysshd.service'
+            'ppp: for initrd-ppp.service')
 conflicts=('mkinitcpio-dropbear' 'mkinitcpio-tinyssh')
 backup=("etc/${pkgname}/config/crypttab"
         "etc/${pkgname}/config/fstab"

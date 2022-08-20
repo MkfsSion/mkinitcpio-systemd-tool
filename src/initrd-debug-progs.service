@@ -30,6 +30,7 @@ InitrdBinary=/usr/bin/cryptsetup optional=yes
 # systemd tools
 InitrdBinary=/usr/bin/journalctl
 InitrdBinary=/usr/bin/less replace=yes
+# Won't work on initramfs
 #InitrdBinary=/usr/bin/systemd-analyze
 
 # early swap support

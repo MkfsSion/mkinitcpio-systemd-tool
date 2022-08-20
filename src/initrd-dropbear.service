@@ -24,11 +24,11 @@ Description=Initrd Dropbear Service
 Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
 ConditionPathExists=/etc/initrd-release
 DefaultDependencies=no
+After=initrd-network-online.target
 After=initrd-shell.service
-After=initrd-network.service
 Before=cryptsetup-pre.target
+Requires=initrd-network-online.target
 Requires=initrd-shell.service
-Requires=initrd-network.service
 
 [Service]
 # use service unit override to select a different port

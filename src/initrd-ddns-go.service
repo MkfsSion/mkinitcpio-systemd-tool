@@ -1,0 +1,24 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Configure Dynamic DNS in the initramfs
+
+[Unit]
+Description=Initrd DDNS Service
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+DefaultDependencies=no
+After=initrd-network-online.target
+Requires=initrd-network-online.target
+
+[Service]
+ExecStart=/usr/bin/ddns-go "-l" "127.0.0.1:9876" "-f" "300" "-c" "/etc/ddns-go.yaml"
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=sysinit.target
+
+[X-SystemdTool]
+# Configuration
+InitrdPath=/etc/ddns-go.yaml
+InitrdBinary=/usr/bin/ddns-go

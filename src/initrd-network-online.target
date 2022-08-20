@@ -1,0 +1,17 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Configured networks in the initramfs
+
+[Unit]
+Description=Initramfs with configured networking
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+Before=cryptsetup-pre.target
+After=initrd-network.target
+AllowIsolate=yes
+
+[Install]
+WantedBy=sysinit.target
+
+[X-SystemdTool]
+InitrdBinary=/usr/lib/systemd/systemd-networkd-wait-online

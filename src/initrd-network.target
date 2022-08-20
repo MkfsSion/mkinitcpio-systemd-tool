@@ -1,0 +1,13 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Configuring networks in the initramfs
+
+[Unit]
+Description=Initramfs with configuring network
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+Before=cryptsetup-pre.target
+AllowIsolate=yes
+
+[Install]
+WantedBy=sysinit.target

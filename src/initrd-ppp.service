@@ -1,0 +1,30 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Configure PPPoE in the initramfs
+
+[Unit]
+Description=Initrd PPPoE Service
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+DefaultDependencies=no
+Before=initrd-network.target
+After=initrd-network.service
+Requires=initrd-network.service
+
+[Service]
+Environment=PROVIDER_NAME=external
+ExecStart=/usr/sbin/pppd call ${PROVIDER_NAME} nodetach nolog
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=initrd-network.target
+
+[X-SystemdTool]
+# PPPoE configurations
+InitrdPath=/etc/ppp
+InitrdPath=/usr/lib/pppd
+InitrdPath=/usr/bin/pppd
+
+# PPPoE kernel module
+InitrdCall=add_module pppoe

@@ -7,9 +7,10 @@ Description=Initrd Network Service
 Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
 ConditionPathExists=/etc/initrd-release
 DefaultDependencies=no
-Before=cryptsetup-pre.target
 Requires=systemd-networkd.service
 Requires=systemd-resolved.service
+Before=initrd-network.target
+After=systemd-udev-trigger.service
 
 [Service]
 Type=oneshot
@@ -24,7 +25,7 @@ ExecStop=/bin/sh -c  "for dev in $(ls /sys/class/net) ; do ip addr flush $dev ; 
 ExecStop=/bin/sh -c  "for dev in $(ls /sys/class/net) ; do ip link set $dev down ; done"
 
 [Install]
-WantedBy=sysinit.target
+WantedBy=initrd-network.target
 
 [X-SystemdTool]
 
