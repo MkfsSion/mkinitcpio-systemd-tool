@@ -10,6 +10,6 @@ this_repo=$(dirname "$0")
 
 # manual package build and install steps:
 cd "$this_repo"
-rm -r -f  pkg/ *.pkg.tar.xz
+rm -r -f  pkg/ *.pkg.tar.zst
 makepkg -e
-sudo pacman -U *.pkg.tar.xz --noconfirm
+sudo pacman -U *.pkg.tar.zst --noconfirm
