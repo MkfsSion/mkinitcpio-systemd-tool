@@ -9,8 +9,9 @@ ConditionPathExists=/etc/initrd-release
 DefaultDependencies=no
 Requires=systemd-networkd.service
 Requires=systemd-resolved.service
+Requires=initrd-udev.target
 Before=initrd-network.target
-After=systemd-udev-trigger.service
+After=initrd-udev.target
 
 [Service]
 Type=oneshot

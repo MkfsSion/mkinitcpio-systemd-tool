@@ -1,0 +1,22 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Configure udev in the initramfs
+
+[Unit]
+Description=Initrd udev configuration Service
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+DefaultDependencies=no
+Before=initrd-udev.target
+After=systemd-udevd.service
+After=systemd-udev-trigger.service
+Requires=systemd-udevd.service
+Requires=systemd-udev-trigger.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=udevadm settle
+
+[Install]
+WantedBy=initrd-udev.target

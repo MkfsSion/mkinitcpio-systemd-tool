@@ -1,0 +1,12 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Configuring udev in the initramfs
+
+[Unit]
+Description=Initramfs with configuring udev
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+AllowIsolate=yes
+
+[Install]
+WantedBy=sysinit.target
