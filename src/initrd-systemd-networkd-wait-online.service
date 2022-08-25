@@ -15,9 +15,10 @@ Before=initrd-network-online.target
 Type=oneshot
 Environment=POST_DELAY=2s
 Environment=INTERFACE=ppp0
-ExecStart=/usr/lib/systemd/systemd-networkd-wait-online -i ${INTERFACE}
+ExecStart=/usr/lib/systemd/systemd-networkd-wait-online -i ${INTERFACE} --timeout=0
 ExecStartPost=/bin/sleep ${POST_DELAY}
 RemainAfterExit=yes
+TimeoutSec=infinity
 
 [Install]
-WantedBy=initrd-network-online.target
+RequiredBy=initrd-network-online.target
