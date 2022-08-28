@@ -18,7 +18,7 @@ pkgdesc="Provisioning tool for systemd in initramfs (systemd-tool)"
 arch=('any')
 url="https://github.com/random-archer/mkinitcpio-systemd-tool"
 license=('Apache')
-depends=('mkinitcpio' 'systemd' 'busybox')
+depends=('mkinitcpio' 'systemd' 'busybox' 'curl' 'ca-certificates-utils')
 optdepends=('cryptsetup: for initrd-cryptsetup.service'
             'dropbear: for initrd-dropbear.service'
             'mc: for initrd-debug-progs.service'
