@@ -16,6 +16,7 @@ Environment=PROVIDER_NAME=external
 ExecStart=/usr/sbin/pppd call ${PROVIDER_NAME} nodetach nolog
 Restart=on-failure
 RestartSec=10s
+SuccessExitStatus= 0 5
 
 [Install]
 WantedBy=initrd-network.target
