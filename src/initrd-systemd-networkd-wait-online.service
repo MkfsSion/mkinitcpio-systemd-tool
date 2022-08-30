@@ -14,8 +14,8 @@ Before=initrd-network-online.target
 [Service]
 Type=oneshot
 Environment=POST_DELAY=2s
-Environment=INTERFACE=ppp0
-ExecStart=/usr/lib/systemd/systemd-networkd-wait-online -i ${INTERFACE} --timeout=0
+Environment=ARGS=
+ExecStart=/usr/lib/systemd/systemd-networkd-wait-online $ARGS --timeout=0
 ExecStartPost=/bin/sleep ${POST_DELAY}
 RemainAfterExit=yes
 TimeoutSec=infinity
