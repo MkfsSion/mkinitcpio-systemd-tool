@@ -31,6 +31,7 @@ backup=("etc/${pkgname}/config/crypttab"
         "etc/${pkgname}/config/fstab"
         "etc/${pkgname}/config/ntp.conf"
         "etc/${pkgname}/config/initrd-nftables.conf"
+        "etc/${pkgname}/config/initrd-shell.conf"
         "etc/${pkgname}/config/initrd-util-usb-hcd.conf"
         "etc/${pkgname}/network/initrd-network.network" )
 #source=("$pkgname-$pkgver.tar.gz::https://github.com/random-archer/${pkgname}/archive/v${pkgver}.tar.gz")

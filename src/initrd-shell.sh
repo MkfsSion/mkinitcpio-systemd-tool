@@ -214,6 +214,18 @@ do_agent_system() {
     $systemd_agent --query
 }
 
+do_agent() {
+    . /etc/initrd-shell.conf
+    if [[ "$password_agent" == "system" ]]; then
+        do_agent_system
+    else
+        do_agent_custom
+    fi
+    if [ $? -ne 0 ]; then
+        do_agent_system
+    fi
+}
+
 # exit this script
 do_exit() {
     local code="$1"
@@ -239,7 +251,7 @@ do_reboot() {
 # try custom password agent, fall back to standard agent
 run_crypt_jobs() {
     log_info "crypt jobs"
-    if do_agent_custom || do_agent_system ; then
+    if do_agent; then
         log_info "crypt success"
         do_exit 0
     else
@@ -302,7 +314,7 @@ do_prompt() {
         read -r -n 1 -p "?> " choice
         print_eol
         case "$choice" in
-            a) do_agent_custom ;;
+            a) do_agent ;;
             s) do_shell ;;
             r) do_reboot ;;
             q) do_exit 0 ;;
