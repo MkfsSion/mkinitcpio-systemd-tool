@@ -118,7 +118,7 @@ how can I auto-provision my custom service unit resources into initramfs?
 * use `InitrdPath=/path/to/host/folder-or-file`
 
 how can I relocate folder during provisioning?
-* not implemented, source and target folder must use the same location
+* use `InitrdPath=/target-folder source=/source-folder`
 
 how can I relocate file and/or change file mode during provisioning?
 * use `InitrdPath=/target-file source=/source-file mode=NNN`

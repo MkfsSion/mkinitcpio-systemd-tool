@@ -274,6 +274,10 @@ add_systemd_unit_X() {
                 elif [[ -d "$source" ]] ; then
                     quiet "provision new dir $source $glob"
                     add_full_dir "$source" "$glob"
+                    if [[ "$source" != "$target" ]]; then
+                        quiet "relocate $source to $target"
+                        mv "$BUILDROOT$source" "$BUILDROOT$target"
+                    fi
                 elif [[ -f "$source" ]] ; then
                     quiet "provision new file $source -> $target $mode"
                     add_file "$source" "$target" "$mode"
