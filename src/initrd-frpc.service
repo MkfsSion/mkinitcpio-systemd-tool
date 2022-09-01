@@ -1,0 +1,27 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Configure  FRP Client in the initramfs
+
+[Unit]
+Description=Initrd FRPC Service
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+DefaultDependencies=no
+After=initrd-network-online.target
+Requires=initrd-network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/frpc  -c /etc/frp/frpc.ini
+ExecReload=/usr/bin/frpc reload -c /etc/frp/frpc.ini
+Restart=on-failure
+RestartSec=5s
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=sysinit.target
+
+[X-SystemdTool]
+# Configuration
+InitrdPath=/etc/frp/frpc.ini
+InitrdBinary=/usr/bin/frpc
