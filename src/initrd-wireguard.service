@@ -1,0 +1,31 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Add WireGuard support in the initramfs
+
+[Unit]
+Description=Initrd WireGuard support Service
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+DefaultDependencies=no
+Requires=initrd-udev.target
+Before=initrd-network.target
+After=initrd-udev.target
+
+[Service]
+Environment=WG_DEV=wg0
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/true
+ExecStop=ip link set ${WG_DEV} down
+ExecStop=ip link del ${WG_DEV}
+
+[Install]
+WantedBy=initrd-network.target
+
+[X-SystemdTool]
+# WireGuard module
+InitrdCall=add_all_modules /drivers/net/wireguard
+# NAT support
+InitrdCall=add_all_modules /netfilter/nft_*
+InitrdCall=add_all_modules /netfilter/nf_tables*
+InitrdCall=add_all_modules /netfilter/xt_*
