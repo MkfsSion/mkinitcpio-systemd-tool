@@ -146,6 +146,7 @@ add_systemd_unit_X() {
     #   $1: service unit candidate: either symlink to a unit or a real unit file
 
     local unit_task="" unit_name="" unit_path="" unit_target=""
+    local template_name="" instance_name="" unit_type=""
 
     # absolute path to the unit candidate
     unit_task="$1"
@@ -155,8 +156,19 @@ add_systemd_unit_X() {
 
     quiet "processing systemd unit $unit_name"
 
+    if [[ "$unit_name" =~ ^.+@.+*\..+$ ]]; then
+        template_name="$(echo -n "$unit_name" | sed -n 's/^\(.\+\)@.\+\..\+$/\1/p')"
+        instance_name="$(echo -n "$unit_name" | sed -n 's/^.\+@\(.\+\)\..\+$/\1/p')"
+        unit_type="$(echo -n "$unit_name" | sed -n 's/^.\+@.\+\.\(.\+\)$/\1/p')"
+    fi
+
+    if [[ -n "$template_name" ]]; then
+        unit_name="$template_name@.$unit_type"
+    fi
+
     # resolve unit task into absolute service unit path, returns first match
     unit_path=$(PATH=/etc/systemd/system:/usr/lib/systemd/system type -P "$unit_name")
+
     if [[ -z "$unit_path" ]] ; then
         error "can not find service unit: %s" "$unit_name"
         return 1
@@ -178,6 +190,13 @@ add_systemd_unit_X() {
     # process configuration directives provided by the service unit
     # https://www.freedesktop.org/software/systemd/man/systemd.unit.html#%5BUnit%5D%20Section%20Options
     local directive="" entry_list=""
+    local temp=""
+    temp="$(mktemp)"
+    cp "$unit_target" "$temp"
+    if [[ -n "$template_name" && -n "$instance_name" ]]; then
+        sed -i "s/%i/$instance_name/g" "$temp"
+    fi
+
     while IFS='=' read -r directive entry_list ; do
 
         # produce entry array
@@ -346,7 +365,8 @@ add_systemd_unit_X() {
                 ;;
         esac
 
-    done < "$unit_target"
+    done < "$temp"
+    rm "$temp"
 
     # handle external-to-unit, i.e. folder-based "Forward" and "Reverse" dependencies:
     # https://www.freedesktop.org/software/systemd/man/systemd.unit.html#Mapping%20of%20unit%20properties%20to%20their%20inverses
@@ -362,6 +382,11 @@ add_systemd_unit_X() {
     # preserve "Reverse" dependency configured from "this_unit" into "other_unit", after enable:
     # this_unit/[Install]/WantedBy=  other_unit   -> enable ->   /other.unit.wants/   this_unit
     # this_unit/[Install]/RequiredBy=other_unit   -> enable ->   /other.unit.requires/this_unit
+    # Use full name for template instance unit
+    if [[ -n "$template_name" && -n "$instance_name" && -n "$unit_type" ]]; then
+        unit_name="$template_name@$instance_name.$unit_type"
+    fi
+
     local unit_reverse=""
     for unit_reverse in {/etc,/usr/lib}/systemd/system/*{.wants,.requires}/"$unit_name" ; do
         if [[ -L "$unit_reverse" ]] ; then
