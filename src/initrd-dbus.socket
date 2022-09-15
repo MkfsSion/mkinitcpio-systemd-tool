@@ -1,0 +1,8 @@
+[Unit]
+Description=D-Bus System Message Bus Socket
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+DefaultDependencies=no
+
+[Socket]
+ListenStream=/run/dbus/system_bus_socket

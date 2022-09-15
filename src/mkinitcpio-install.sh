@@ -359,6 +359,16 @@ add_systemd_unit_X() {
                     "${inline_code[@]}"
                 fi
                 ;;
+            InitrdUser)
+                # Add users to initramfs
+                local user="${entry_list[*]}"
+                echo "$user" >> "$BUILDROOT/etc/passwd"
+                ;;
+            InitrdGroup)
+                # Add group to initramfs
+                local group="${entry_list[*]}"
+                echo "$group" >> "$BUILDROOT/etc/group"
+                ;;
             Initrd*)
                 error "invalid [X-SystemdTool] directive: $directive"
                 return 1

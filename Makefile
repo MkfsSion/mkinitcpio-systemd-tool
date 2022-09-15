@@ -11,7 +11,7 @@ install:
 	install -vDm 755 src/mkinitcpio-install.sh $(DESTDIR)$(PREFIX)/lib/initcpio/install/systemd-tool
 	install -vDm 755 src/initrd-build.sh -t $(DESTDIR)$(PREFIX)/lib/mkinitcpio-systemd-tool
 	install -vDm 755 src/initrd-shell.sh -t $(DESTDIR)$(PREFIX)/lib/mkinitcpio-systemd-tool
-	install -vDm 644 src/*.{path,service,target} -t $(DESTDIR)$(SYSTEMD_SYSTEM_PATH)/systemd/system
+	install -vDm 644 src/*.{path,service,target,socket} -t $(DESTDIR)$(SYSTEMD_SYSTEM_PATH)/systemd/system
 	install -vDm 644 LICENSE.md -t $(DESTDIR)$(PREFIX)/share/licenses/mkinitcpio-systemd-tool
 	install -vDm 644 README.md -t $(DESTDIR)$(PREFIX)/share/doc/mkinitcpio-systemd-tool
 	install -vDm 644 src/initrd-shell.conf -t $(DESTDIR)/etc/mkinitcpio-systemd-tool/config

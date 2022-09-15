@@ -63,3 +63,6 @@ InitrdPath=/etc/ssl/
 
 # add curl
 InitrdBinary=/usr/bin/curl
+
+# add networkctl
+InitrdBinary=/usr/bin/networkctl
