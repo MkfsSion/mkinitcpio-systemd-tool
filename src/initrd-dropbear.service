@@ -24,10 +24,10 @@ Description=Initrd Dropbear Service
 Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
 ConditionPathExists=/etc/initrd-release
 DefaultDependencies=no
-After=initrd-network-online.target
+After=initrd-network.target
 After=initrd-shell.service
 Before=cryptsetup-pre.target
-Requires=initrd-network-online.target
+Requires=initrd-network.target
 Requires=initrd-shell.service
 
 [Service]
