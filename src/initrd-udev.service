@@ -20,3 +20,8 @@ ExecStart=udevadm settle
 
 [Install]
 WantedBy=initrd-udev.target
+
+[X-SystemdTool]
+
+# udev configuration
+InitrdPath=/etc/udev/ source=/etc/mkinitcpio-systemd-tool/udev/
