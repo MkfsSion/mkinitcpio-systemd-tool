@@ -1,0 +1,25 @@
+# This file is part of https://github.com/random-archer/mkinitcpio-systemd-tool
+
+# Configure networks in the initramfs
+
+[Unit]
+Description=Apply Kernel Variables
+Documentation=https://github.com/random-archer/mkinitcpio-systemd-tool/blob/master/README.md
+ConditionPathExists=/etc/initrd-release
+DefaultDependencies=no
+Requires=systemd-sysctl.service
+Before=initrd-network.target
+After=initrd-udev.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/bin/true
+
+[Install]
+WantedBy=sysinit.target
+
+[X-SystemdTool]
+
+# sysctl.d
+InitrdPath=/etc/sysctl.d/ source=/etc/mkinitcpio-systemd-tool/sysctl.d/

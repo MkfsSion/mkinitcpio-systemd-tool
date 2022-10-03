@@ -41,6 +41,8 @@ InitrdPath=/etc/systemd/network/ source=/etc/mkinitcpio-systemd-tool/network/
 
 # provision discovered network kernel modules
 InitrdCall=add_checked_modules /drivers/net/
+InitrdCall=add_module tcp_bbr
+InitrdCall=add_module sch_cake
 
 # runtime location of resolv.conf provided by systemd-resolved.service
 InitrdLink=/etc/resolv.conf target=/run/systemd/resolve/resolv.conf
